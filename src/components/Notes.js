@@ -3,6 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem"
 import AddNote from "./AddNote"
 import { useNavigate } from "react-router-dom";
+import ViewNote from "./ViewNote";
 
 const Notes = (props) => {
     let navigate = useNavigate();
@@ -19,8 +20,11 @@ const Notes = (props) => {
     }, [])
     const ref = useRef(null)
     const refClose = useRef(null)
+    const viewRef = useRef(null)
 
     const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
+    const [view, setview] = useState({ id: "", title: "", description: "", tag: "" })
+
 
     const updateNote = (currentNote) => {
         ref.current.click();
@@ -34,11 +38,36 @@ const Notes = (props) => {
         editNote(note.id, note.etitle, note.edescription, note.etag);
         refClose.current.click();
         props.showAlert("Updated Successfully", "success");
-
+    }
+    const openNote = (note) => {
+        console.log(note)
+        setview(note)
+        viewRef.current.click();
     }
 
     return (
         <>
+
+            <button type="button" ref={viewRef} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+
+            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-scrollable">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="staticBackdropLabel">{view.title}</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body" style={{ wordBreak: "break-Word" }}>
+                            {view.description}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Understood</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <AddNote showAlert={props.showAlert} />
             <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
@@ -59,7 +88,7 @@ const Notes = (props) => {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="edescription" className="form-label">Description</label>
-                                    <input type="text" className="form-control" id="edescription" value={note.edescription} name="edescription" onChange={onChange} />
+                                    <textarea type="text" className="form-control" id="edescription" value={note.edescription} name="edescription" onChange={onChange} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="etag" className="form-label">Tag</label>
@@ -80,7 +109,7 @@ const Notes = (props) => {
                     {notes.length === 0 && 'No Notes to Display'}
                 </div>
                 {notes.map((note) => {
-                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}></NoteItem>;
+                    return <NoteItem key={note._id} openNote={openNote} updateNote={updateNote} note={note} showAlert={props.showAlert}></NoteItem>;
                 })}
             </div>
         </>
