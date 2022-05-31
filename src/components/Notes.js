@@ -25,7 +25,6 @@ const Notes = (props) => {
     const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
     const [view, setview] = useState({ id: "", title: "", description: "", tag: "" })
 
-
     const updateNote = (currentNote) => {
         ref.current.click();
         setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
@@ -40,7 +39,6 @@ const Notes = (props) => {
         props.showAlert("Updated Successfully", "success");
     }
     const openNote = (note) => {
-        console.log(note)
         setview(note)
         viewRef.current.click();
     }
@@ -48,25 +46,7 @@ const Notes = (props) => {
     return (
         <>
 
-            <button type="button" ref={viewRef} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
-
-            <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-scrollable">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="staticBackdropLabel">{view.title}</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body" style={{ wordBreak: "break-Word" }}>
-                            {view.description}
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Understood</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ViewNote viewRef={viewRef} setview={setview} view={view}></ViewNote>
 
             <AddNote showAlert={props.showAlert} />
             <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
