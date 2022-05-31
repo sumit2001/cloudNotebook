@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/cloudNotebook/static/css/main.4204863a.css",
+    "main.css": "/cloudNotebook/static/css/main.7272d5e5.css",
     "main.js": "/cloudNotebook/static/js/main.54dcdf9d.js",
     "index.html": "/cloudNotebook/index.html",
-    "main.4204863a.css.map": "/cloudNotebook/static/css/main.4204863a.css.map",
+    "main.7272d5e5.css.map": "/cloudNotebook/static/css/main.7272d5e5.css.map",
     "main.54dcdf9d.js.map": "/cloudNotebook/static/js/main.54dcdf9d.js.map"
   },
   "entrypoints": [
-    "static/css/main.4204863a.css",
+    "static/css/main.7272d5e5.css",
     "static/js/main.54dcdf9d.js"
   ]
 }
